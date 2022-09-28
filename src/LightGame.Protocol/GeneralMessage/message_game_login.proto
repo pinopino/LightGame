@@ -1,0 +1,36 @@
+syntax = "proto3";
+package LightGame.Protocol;
+
+//获取配置信息
+message C2S1001{
+    int32 MobileType = 1;
+    string CurVersion = 2;
+}
+
+message S2C1001 {
+	string VersionTotal = 1;
+	string VersionPatch = 2;
+	bool IsAppStorePass = 3;
+	string FirUrl = 4;
+	string ApkUrl = 5;
+	string Doname = 6;
+	string FixIp = 7;
+}
+
+//游客登录
+message C2S1003{
+    int32 MobileType = 1;
+    string DeviceId = 2;
+}
+
+message S2C1003{
+	int64 UserId = 1;
+	string UserName = 2;
+	string Token = 3;
+	string LoginIP = 10;
+	int32 LoginPort = 11;
+	string GateIP = 12;
+	int32 GatePort = 13;
+	string ApiIP = 14;
+	int32 ApiPort = 15;
+}

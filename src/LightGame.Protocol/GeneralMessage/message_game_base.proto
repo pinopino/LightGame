@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+package LightGame.Protocol;
+
+//tcp
+message LGMsg {
+//Request
+  int32 ActionId = 1;
+  int64 UserId = 2;
+  int32 MsgId = 3;
+  string Token = 4;
+  int64 St = 5;
+  bytes Content = 6;//合并数据包
+  string Sign = 7;
+//Response
+  int32 ErrorCode = 10;
+  string ErrorInfo = 11;
+}
+
+//http
+message LGResponse {
+  int32 ErrorCode = 1;
+  string ErrorInfo = 2;
+  bytes Content = 3;
+}

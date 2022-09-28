@@ -1,0 +1,31 @@
+﻿{
+  "Gate": {
+    "Libuv": false,
+    "SSL": false,
+    "pfxFile": "",
+    "pfxPwd": "",
+    "Websocket": false,
+    "IP": "127.0.0.1",
+    "Port": 10001
+  },
+  "Cluster": {
+    "ClusterId": "",
+    "ServiceId": "",
+    "SiloName": "测试Silo",
+    "SiloPort": 11111,
+    "GatewayPort": 30000,
+    "PrimarySiloPort": null,
+    "MembershipConfig": {
+      "Invariant": "MySql.Data.MySqlClient",
+      "ConnectionString": "Data Source=127.0.0.1;Database=orleans;Uid=root;Pwd=;charset=utf8"
+    },
+    "StorageConfig": {
+      "Invariant": "MySql.Data.MySqlClient",
+      "ConnectionString": "Data Source=127.0.0.1;Database=orleans;Uid=root;Pwd=;charset=utf8"
+    },
+    "ReminderConfig": {
+      "Invariant": "MySql.Data.MySqlClient",
+      "ConnectionString": "Data Source=127.0.0.1;Database=orleans;Uid=root;Pwd=;charset=utf8"
+    }
+  }
+}
