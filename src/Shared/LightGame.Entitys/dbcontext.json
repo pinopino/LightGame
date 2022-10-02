@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "LGData": "Data Source=127.0.0.1;Database=LGData;Uid=root;Pwd=123456;charset=utf8",
+    "LGRecord": "Data Source=127.0.0.1;Database=LGRecord;Uid=root;Pwd=123456;charset=utf8"
+  }
+}

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\GameConsts.cs" Link="GameConsts.cs" />
+    <Compile Include="..\Shared\StorageNameConsts.cs" Link="StorageNameConsts.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="4.0.0-preview2" />
+    <PackageReference Include="Microsoft.Orleans.Streaming" Version="4.0.0-preview2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LightGame.Common\LightGame.Common.csproj" />
+    <ProjectReference Include="..\LightGame.GrainInterfaces\LightGame.GrainInterfaces.csproj" />
+    <ProjectReference Include="..\Shared\LightGame.Entitys\LightGame.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -23,6 +23,7 @@ namespace LightGame.Silo
 
         private IEventLoopGroup _bossGroup;
         private IEventLoopGroup _workGroup;
+        private IEventLoopGroup _businessGroup;
         private IChannel _bootstrapChannel;
 
         public WebSocketService(IClusterClient client, IConfiguration configuration, ILoggerFactory loggerFactory)
@@ -65,6 +66,7 @@ namespace LightGame.Silo
                 _bossGroup = new MultithreadEventLoopGroup(1);
                 _workGroup = new MultithreadEventLoopGroup();
             }
+            _businessGroup = new MultithreadEventLoopGroup();
 
             X509Certificate2 tlsCertificate = null;
             var useSsl = SiloGateSetting.UseSsl;
@@ -111,7 +113,8 @@ namespace LightGame.Silo
 
                     pipeline.AddLast(new HttpServerCodec());
                     pipeline.AddLast(new HttpObjectAggregator(65536));
-                    pipeline.AddLast(new WebSocketServerHandler(_client, _configuration, _loggerFactory));
+                    pipeline.AddLast(new WebSocketServerHandler(_loggerFactory));
+                    pipeline.AddLast(_businessGroup, new BusinessLogicHandler(_client, _configuration, _loggerFactory));
                 }));
 
             var ip = SiloGateSetting.IP;

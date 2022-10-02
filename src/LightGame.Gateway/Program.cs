@@ -1,7 +1,6 @@
 ﻿using LightGame.Silo;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MO.Gateway.Network;
 
 namespace LightGame.Gateway
 {

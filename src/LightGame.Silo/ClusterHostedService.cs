@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LightGame.Grains;
+using LightGame.Shared;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -65,7 +67,7 @@ namespace LightGame.Silo
                         options.Invariant = SiloClusterSetting.MembershipInvariant;
                         options.ConnectionString = SiloClusterSetting.MembershipConnStr;
                     });
-                    builder.AddAdoNetGrainStorage(StorageNameConst.DefaultStorage, options =>
+                    builder.AddAdoNetGrainStorage(StorageNameConsts.DefaultStorage, options =>
                     {
                         options.Invariant = SiloClusterSetting.StorageInvariant;
                         options.ConnectionString = SiloClusterSetting.StorageConnStr;
@@ -75,6 +77,12 @@ namespace LightGame.Silo
                     {
                         options.Invariant = SiloClusterSetting.ReminderInvariant;
                         options.ConnectionString = SiloClusterSetting.ReminderConnStr;
+                    });
+                    builder.AddAdoNetGrainStorage(StorageNameConsts.PubSubStorage, options =>
+                    {
+                        options.Invariant = SiloClusterSetting.StorageInvariant;
+                        options.ConnectionString = SiloClusterSetting.StorageConnStr;
+                        options.UseJsonFormat = true;
                     });
                     builder.UseDashboard();
                 });

@@ -5,7 +5,6 @@ using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using DotNetty.Transport.Libuv;
-using LightGame.Silo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,7 +13,7 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace MO.Gateway.Network
+namespace LightGame.Silo
 {
     public class SocketService : IHostedService
     {
@@ -23,9 +22,10 @@ namespace MO.Gateway.Network
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
 
-        IEventLoopGroup _bossGroup;
-        IEventLoopGroup _workGroup;
-        IChannel _bootstrapChannel;
+        private IEventLoopGroup _bossGroup;
+        private IEventLoopGroup _workGroup;
+        private IEventLoopGroup _businessGroup;
+        private IChannel _bootstrapChannel;
 
         public SocketService(IClusterClient client, IConfiguration configuration, ILoggerFactory loggerFactory)
         {
@@ -67,6 +67,7 @@ namespace MO.Gateway.Network
                 _bossGroup = new MultithreadEventLoopGroup(1);
                 _workGroup = new MultithreadEventLoopGroup();
             }
+            _businessGroup = new MultithreadEventLoopGroup();
 
             X509Certificate2 tlsCertificate = null;
             var useSsl = SiloGateSetting.UseSsl;
@@ -107,7 +108,8 @@ namespace MO.Gateway.Network
 
                     pipeline.AddLast(new LengthFieldPrepender(ByteOrder.LittleEndian, 2, 0, false));
                     pipeline.AddLast(new LengthFieldBasedFrameDecoder(ByteOrder.LittleEndian, ushort.MaxValue, 0, 2, 0, 2, true));
-                    pipeline.AddLast(new SocketServerHandler(_client, _configuration, _loggerFactory));
+                    pipeline.AddLast(new SocketServerHandler(_loggerFactory));
+                    pipeline.AddLast(_businessGroup, new BusinessLogicHandler(_client, _configuration, _loggerFactory));
                 }));
 
             var ip = SiloGateSetting.IP;
