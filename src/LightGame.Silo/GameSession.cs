@@ -11,30 +11,8 @@ using Orleans;
 
 namespace LightGame.Silo
 {
-    public class GameSession
+    public class GameSession : IOutboundObserver
     {
-        class OutboundObserver : IOutboundObserver
-        {
-            private readonly GameSession session;
-
-            public OutboundObserver(GameSession session)
-            {
-                this.session = session;
-            }
-
-            public async void Close(LGMsg packet = null)
-            {
-                if (packet != null)
-                    await session.SendAsync(packet);
-                await session.Close();
-            }
-
-            public async void SendPacket(LGMsg packet)
-            {
-                await session.SendAsync(packet);
-            }
-        }
-
         private readonly IClusterClient _client;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
@@ -61,7 +39,7 @@ namespace LightGame.Silo
                 if (!packet.ValidateSign(_secretKey))
                 {
                     await SendAsync(packet.ParseResult(LGErrorType.Hidden, "签名验证失败"));
-                    await Close();
+                    await CloseAsync();
                     return;
                 }
 
@@ -72,23 +50,22 @@ namespace LightGame.Silo
                 if (tokenInfo == null || tokenInfo.Validate(packet.Token))
                 {
                     await SendAsync(packet.ParseResult(LGErrorType.Hidden, "Token验证失败"));
-                    await Close();
+                    await CloseAsync();
                     return;
                 }
 
-                //同步初始化
+                // 初始化
                 if (!_isInit)
                 {
                     var userGrain = _client.GetGrain<IUserGrain>(userId);
-                    var outboundObserver = new OutboundObserver(this);
-                    var outboundObserverRef = _client.CreateObjectReference<IOutboundObserver>(outboundObserver);
+                    var outboundObserverRef = _client.CreateObjectReference<IOutboundObserver>(this);
                     await userGrain.Subscribe(outboundObserverRef);
 
                     _router = _client.GetGrain<IPacketRouterGrain>(userId);
                     _isInit = true;
                 }
 
-                //心跳包
+                // 心跳
                 if (packet.ActionId == 1)
                 {
                     await tokenGrain.RefreshTokenTime();
@@ -108,12 +85,27 @@ namespace LightGame.Silo
             }
         }
 
+        #region Outbound Observe
+        public async Task SendPacket(LGMsg packet)
+        {
+            await this.SendAsync(packet);
+        }
+
+        public async Task Close(LGMsg packet = null)
+        {
+            if (packet != null)
+                await this.SendAsync(packet);
+            await this.CloseAsync();
+        }
+        #endregion
+
         public async Task SendAsync(LGMsg packet)
         {
             try
             {
                 if (_context.Channel.Active)
                 {
+                    // link: https://juejin.cn/post/7010924544378535950
                     var bytes = packet.ToByteArray();
                     IByteBuffer buffer = Unpooled.WrappedBuffer(bytes);
                     await _context.WriteAndFlushAsync(buffer);
@@ -135,7 +127,7 @@ namespace LightGame.Silo
                 _router.Disconnect();
         }
 
-        public async Task Close()
+        public async Task CloseAsync()
         {
             await _context.CloseAsync();
         }

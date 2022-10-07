@@ -5,7 +5,7 @@ namespace LightGame.GrainInterfaces
 {
     public interface IOutboundObserver : IGrainObserver
     {
-        void SendPacket(LGMsg packet);
-        void Close(LGMsg packet = null);
+        Task SendPacket(LGMsg packet);
+        Task Close(LGMsg packet = null);
     }
 }
