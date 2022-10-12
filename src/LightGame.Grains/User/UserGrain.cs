@@ -55,24 +55,24 @@ namespace LightGame.Grains
         }
         #endregion
 
-        public Task SubscribeWorld(Guid streamId)
+        public Task SubscribeWorld(StreamId streamId)
         {
-            return _worldHandler.Register(streamId, string.Empty, string.Empty);
+            return _worldHandler.Register(streamId);
         }
 
-        public Task UnsubscribeWorld(Guid streamId)
+        public Task UnsubscribeWorld(StreamId streamId)
         {
-            return _worldHandler.UnRegister(streamId, string.Empty, string.Empty);
+            return _worldHandler.UnRegister(streamId);
         }
 
-        public Task SubscribeRoom(Guid streamId)
+        public Task SubscribeRoom(StreamId streamId)
         {
-            return _roomHandler.Register(streamId, string.Empty, string.Empty);
+            return _roomHandler.Register(streamId);
         }
 
-        public Task UnsubscribeRoom(Guid streamId)
+        public Task UnsubscribeRoom(StreamId streamId)
         {
-            return _roomHandler.UnRegister(streamId, string.Empty, string.Empty);
+            return _roomHandler.UnRegister(streamId);
         }
 
         public Task Notify(LGMsg packet)

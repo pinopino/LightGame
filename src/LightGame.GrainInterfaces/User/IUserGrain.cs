@@ -1,4 +1,5 @@
 ﻿using LightGame.Protocol;
+using Orleans.Runtime;
 
 namespace LightGame.GrainInterfaces
 {
@@ -7,11 +8,11 @@ namespace LightGame.GrainInterfaces
         Task Notify(LGMsg packet);
         Task Kick();
 
-        Task SubscribeWorld(Guid streamId);
-        Task UnsubscribeWorld(Guid streamId);
+        Task SubscribeWorld(StreamId streamId);
+        Task UnsubscribeWorld(StreamId streamId);
 
-        Task SubscribeRoom(Guid streamId);
-        Task UnsubscribeRoom(Guid streamId);
+        Task SubscribeRoom(StreamId streamId);
+        Task UnsubscribeRoom(StreamId streamId);
 
         Task SetNickName(string nickName);
         Task<string> GetNickName();

@@ -1,10 +1,11 @@
 ﻿using LightGame.Protocol;
 using Orleans;
+using Orleans.Runtime;
 using Orleans.Streams;
 
 namespace LightGame.Grains
 {
-    public class BaseAsyncObserver: IAsyncObserver<LGMsg>
+    public class BaseAsyncObserver : IAsyncObserver<LGMsg>
     {
         private Grain _grain;
         private Func<LGMsg, StreamSequenceToken, Task> _onNextAsync;
@@ -15,10 +16,12 @@ namespace LightGame.Grains
             _grain = grain;
         }
 
-        public virtual async Task Register(Guid streamId, string streamProviderName, string streamNamespace)
+        protected virtual string StreamProviderName => "DefaultStreamProvider";
+
+        public virtual async Task Register(StreamId streamId)
         {
-            var streamProvider = _grain.GetStreamProvider(streamProviderName);
-            var stream = streamProvider.GetStream<LGMsg>(streamId, streamNamespace);
+            var streamProvider = _grain.GetStreamProvider(StreamProviderName);
+            var stream = streamProvider.GetStream<LGMsg>(streamId);
 
             var subscriptionHandles = await stream.GetAllSubscriptionHandles();
             if (subscriptionHandles == null || subscriptionHandles.Count == 0)
@@ -34,13 +37,13 @@ namespace LightGame.Grains
             }
         }
 
-        public virtual async Task UnRegister(Guid streamId, string streamProviderName, string streamNamespace)
+        public virtual async Task UnRegister(StreamId streamId)
         {
-            var streamProvider = _grain.GetStreamProvider(streamProviderName);
-            var stream = streamProvider.GetStream<LGMsg>(streamId, streamNamespace);
+            var streamProvider = _grain.GetStreamProvider(StreamProviderName);
+            var stream = streamProvider.GetStream<LGMsg>(streamId);
 
             var subscriptionHandles = await stream.GetAllSubscriptionHandles();
-            if (subscriptionHandles != null )
+            if (subscriptionHandles != null)
             {
                 foreach (var handle in subscriptionHandles)
                 {

@@ -2,6 +2,6 @@
 
 package LightGame.Protocol;
 
-message ProtoRoomInfo{
+message ProtoRoomInfo {
 
 }

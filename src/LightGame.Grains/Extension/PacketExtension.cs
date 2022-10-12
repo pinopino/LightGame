@@ -2,7 +2,7 @@
 using LightGame.Common;
 using LightGame.Protocol;
 
-namespace LightGame.Silo
+namespace LightGame.Grains
 {
     public static class PacketExtension
     {

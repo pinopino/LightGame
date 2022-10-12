@@ -3,6 +3,7 @@ using DotNetty.Transport.Channels;
 using Google.Protobuf;
 using LightGame.Common;
 using LightGame.GrainInterfaces;
+using LightGame.Grains;
 using LightGame.Protocol;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

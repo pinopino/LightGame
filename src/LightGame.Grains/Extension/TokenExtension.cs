@@ -1,7 +1,7 @@
 ﻿using LightGame.GrainInterfaces;
 using LightGame.Shared;
 
-namespace LightGame.Silo
+namespace LightGame.Grains
 {
     public static class TokenExtension
     {

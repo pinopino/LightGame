@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightGame.Protocol", "src\L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightGame.Common", "src\LightGame.Common\LightGame.Common.csproj", "{5F5C78F5-A719-49B1-823B-D61B88DEF67A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightGame.Grains", "src\LightGame.Grains\LightGame.Grains.csproj", "{4C66A5FD-ED88-404E-BFD2-0FAB86710179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightGame.Grains", "src\LightGame.Grains\LightGame.Grains.csproj", "{4C66A5FD-ED88-404E-BFD2-0FAB86710179}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightGame.Entity", "src\Shared\LightGame.Entitys\LightGame.Entity.csproj", "{D25818DA-D0BE-4294-BD89-BA184E5F4063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightGame.Entity", "src\Shared\LightGame.Entitys\LightGame.Entity.csproj", "{D25818DA-D0BE-4294-BD89-BA184E5F4063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightGame.API", "src\LightGame.API\LightGame.API.csproj", "{2D021816-A9E9-4A7A-A146-37C817F6429E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{D25818DA-D0BE-4294-BD89-BA184E5F4063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25818DA-D0BE-4294-BD89-BA184E5F4063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25818DA-D0BE-4294-BD89-BA184E5F4063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D021816-A9E9-4A7A-A146-37C817F6429E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D021816-A9E9-4A7A-A146-37C817F6429E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D021816-A9E9-4A7A-A146-37C817F6429E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D021816-A9E9-4A7A-A146-37C817F6429E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
